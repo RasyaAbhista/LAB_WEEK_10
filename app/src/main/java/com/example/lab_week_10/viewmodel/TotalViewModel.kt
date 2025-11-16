@@ -3,21 +3,23 @@ package com.example.lab_week_10.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.lab_week_10.database.TotalObject
 
 class TotalViewModel : ViewModel() {
 
-    private val _total = MutableLiveData<Int>()
-    val total: LiveData<Int> = _total
+    private val _total = MutableLiveData<TotalObject>()
+    val total: LiveData<TotalObject> = _total
 
     init {
-        _total.postValue(0)
+        _total.value = TotalObject(0, "")
     }
 
     fun incrementTotal() {
-        _total.postValue(_total.value?.plus(1))
+        val t = _total.value ?: TotalObject(0, "")
+        _total.value = TotalObject(t.value + 1, t.date)
     }
 
-    fun setTotal(newTotal: Int) {
-        _total.postValue(newTotal)
+    fun setTotal(value: Int, date: String) {
+        _total.value = TotalObject(value, date)
     }
 }

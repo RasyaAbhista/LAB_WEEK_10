@@ -11,10 +11,6 @@ import com.example.lab_week_10.viewmodels.TotalViewModel
 
 class FirstFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -24,25 +20,19 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         prepareViewModel()
     }
 
-    private fun updateText(total: Int) {
+    private fun updateText(value: Int) {
         view?.findViewById<TextView>(R.id.text_total)?.text =
-            getString(R.string.text_total, total)
+            getString(R.string.text_total, value)
     }
 
     private fun prepareViewModel() {
-        val viewModel =
-            ViewModelProvider(requireActivity())[TotalViewModel::class.java]
+        val viewModel = ViewModelProvider(requireActivity())[TotalViewModel::class.java]
 
-        viewModel.total.observe(viewLifecycleOwner) { total ->
-            updateText(total)
+        viewModel.total.observe(viewLifecycleOwner) { totalObject ->
+            updateText(totalObject.value)
         }
-    }
-
-    companion object {
-        fun newInstance() = FirstFragment()
     }
 }
